@@ -6,4 +6,19 @@ const PathToTitle = {
   "/profile": "Profile",
 }
 
-export default PathToTitle;
+const pathWithHome = [
+  "/dashboard",
+  "/checklist",
+  "/add",
+  "/chart",
+  "/profile",
+];
+const pathWithNavbar = [
+  "/dashboard",
+  "/checklist",
+  "/add",
+  "/chart",
+  "/profile",
+];
+
+export { PathToTitle, pathWithHome, pathWithNavbar };
