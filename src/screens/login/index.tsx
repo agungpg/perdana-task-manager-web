@@ -1,9 +1,12 @@
+"use client";
 import LogoWithTextIcon from "@/components/icons/LogoWithTextIcon";
 import { TextInput } from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import Typography from "@/components/ui/Typography";
+import useLogin from "./useLogin";
 
 const LoginScreen = () => {
+  const { handleLogin, handleChange, form, isPending, error } = useLogin();
   return (
     <div className="flex flex-col items-center justify-center w-full">
     <div className="flex flex-col items-center justify-center pt-[40px] gap-[12px] w-[80%] max-w-[380px]">
@@ -25,8 +28,34 @@ const LoginScreen = () => {
 
         </div>
         <div className="flex flex-col items-center justify-center gap-[16px] mt-6 w-full">
-          <TextInput className="!rounded-md w-full" placeholder="Enter your email" size="lg" labelClassName="text-[16px] font-medium text-[#6c757d]"/>
-          <TextInput type="password" className="!rounded-md w-full" placeholder="Enter your password" size="lg" labelClassName="text-[16px] font-medium text-[#6c757d]"/>
+          <TextInput 
+            className="!rounded-md w-full" 
+            placeholder="Enter your username" 
+            size="lg" 
+            labelClassName="text-[16px] font-medium text-[#6c757d]" 
+            onChange={handleChange} 
+            name="username" 
+            value={form.username}
+          />
+          <TextInput 
+            type="password" 
+            className="!rounded-md w-full" 
+            placeholder="Enter your password" 
+            size="lg" 
+            labelClassName="text-[16px] font-medium text-[#6c757d]" 
+            onChange={handleChange} 
+            name="password" 
+            value={form.password}
+          />
+          {error && (
+            <Typography
+              variant="caption"
+              weight="semibold"
+              className="text-[14px] !text-[#dc3545] text-left w-full cursor-pointer"
+            >
+              {error.message}
+            </Typography>
+          )}
           <Typography
             variant="caption"
             weight="semibold"
@@ -34,7 +63,7 @@ const LoginScreen = () => {
           >
             Forgot password?
           </Typography>
-          <Button className="w-full h-[48px] text-[16px] font-semibold text-[#fff]">Login</Button>
+          <Button className="w-full h-[48px] text-[16px] font-semibold text-[#fff]" onClick={handleLogin} loading={isPending}>Login</Button>
 
           <Typography
             variant="body"

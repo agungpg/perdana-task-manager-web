@@ -1,6 +1,8 @@
 import "./globals.css";
 import 'react-calendar/dist/Calendar.css';
 import LayoutWrapper from "@/components/ui/LayoutWrapper";
+import { QueryProvider } from "@/components/providers/QueryProvider";
+
 
 export const metadata = {
   title: "Perdana Task Manager",
@@ -25,7 +27,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <LayoutWrapper>{children}</LayoutWrapper>
+      <QueryProvider>
+        <LayoutWrapper>{children}</LayoutWrapper>
+      </QueryProvider>
     </html>
   );
 }
