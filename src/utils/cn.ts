@@ -6,6 +6,6 @@ import { twMerge } from "tailwind-merge"
  * - clsx handles conditional logic
  * - tailwind-merge resolves class conflicts
  */
-export function cn(...inputs: any[]) {
+export function cn(...inputs: unknown[]) {
   return twMerge(clsx(inputs))
 }

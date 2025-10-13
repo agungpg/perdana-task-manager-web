@@ -1,4 +1,4 @@
-import React, { forwardRef, JSX } from "react";
+import React, { forwardRef } from "react";
 
 /**
  * Typography
@@ -83,7 +83,6 @@ const Typography = forwardRef<HTMLElement, TypographyProps>(
       lineHeightClass,
       letterSpacingClass,
       truncate,
-      uppercase,
       className,
       style,
       ...rest
@@ -172,8 +171,7 @@ const Typography = forwardRef<HTMLElement, TypographyProps>(
     // Render polymorphic element
     // using `as` prop (Component) and forwarding ref
     return (
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      <Component ref={ref as any} className={combinedClass || undefined} style={combinedStyle} {...rest}>
+      <Component ref={ref as React.Ref<HTMLElement>} className={combinedClass || undefined} style={combinedStyle} {...rest}>
         {children}
       </Component>
     );

@@ -70,7 +70,7 @@ const LoginScreen = () => {
             weight="medium"
             className="text-[14px] text-center w-full !text-[#6c757d] mt-6 cursor-pointer"
           >
-            Don't have an account?
+            {"Don't have an account?"}
           </Typography>
         </div>
       </div>

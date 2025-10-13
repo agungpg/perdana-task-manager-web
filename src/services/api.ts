@@ -2,13 +2,13 @@ import { apiKey, apiUrl } from "@/constants/api";
 import { isLoggedIn } from "@/utils/auth";
 import { getAccessToken } from "@/utils/token";
 
-interface ApiFetchParams<K> {
+interface ApiFetchParams {
   method?: string;
-  body?: K;
-  headers?: any;
+  body?: BodyInit;
+  headers?: HeadersInit;
 }
 
-const apiFetch = async <T, K>(url: string, params: ApiFetchParams<K> = {}): Promise<T> => {
+const apiFetch = async <T, K>(url: string, params: ApiFetchParams= {}): Promise<T> => {
 
   try {
     const response = await fetch(`${apiUrl}${url}`, params as RequestInit);
@@ -22,13 +22,13 @@ const apiFetch = async <T, K>(url: string, params: ApiFetchParams<K> = {}): Prom
   }    
 }
 
-const composeFetchParams = (params: {
+const composeFetchParams = <K>(params: {
   method?: string;
-  body?: any;
-  headers?: any;
-}): ApiFetchParams<any> => {
+  body?: K;
+  headers?: HeadersInit;
+}): ApiFetchParams => {
   const { method, body, headers } = params;
-  const defaultHeaders: Record<string, string> = {
+  const defaultHeaders: HeadersInit = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
     'x-api-key': apiKey,
@@ -41,28 +41,33 @@ const composeFetchParams = (params: {
     Object.assign(defaultHeaders, headers);
   }
 
-  return {
+  const result: ApiFetchParams = {
     method,
-    body: body instanceof FormData || body == null ? body as any : JSON.stringify(body) as BodyInit,
     headers: defaultHeaders
-  };
+  }
+
+  if(result.body) {
+    result.body =  body instanceof FormData || body == null ? body as unknown as BodyInit : JSON.stringify(body) as BodyInit;
+  }
+
+  return result;
 }
 
 const api = {
   get: <T, K>(url: string, params: {
-    headers?: any;
-  }) => apiFetch<T, K>(url, composeFetchParams({ method: 'GET', ...params } as ApiFetchParams<K>)),
+    headers?: HeadersInit;
+  }) => apiFetch<T, K>(url, composeFetchParams({ method: 'GET', ...params } as ApiFetchParams)),
   post: <T, K>(url: string, params: {
     body?: K;
-    headers?: any;
-  }) => apiFetch<T, K>(url, composeFetchParams({ method: 'POST', ...params } as ApiFetchParams<K>)),
+    headers?: HeadersInit;
+  }) => apiFetch<T, K>(url, composeFetchParams({ method: 'POST', ...params } as ApiFetchParams)),
   put: <T, K>(url: string, params: {
     body?: K;
-    headers?: any;
-  }) => apiFetch<T, K>(url, composeFetchParams({ method: 'PUT', ...params } as ApiFetchParams<K>)),
+    headers?: HeadersInit;
+  }) => apiFetch<T, K>(url, composeFetchParams({ method: 'PUT', ...params } as ApiFetchParams)),
   delete: <T, K>(url: string, params: {
-    headers?: any;
-  }) => apiFetch<T, K>(url, composeFetchParams({ method: 'DELETE', ...params } as ApiFetchParams<K>)),
+    headers?: HeadersInit;
+  }) => apiFetch<T, K>(url, composeFetchParams({ method: 'DELETE', ...params } as ApiFetchParams)),
 };
 
 export default api;
