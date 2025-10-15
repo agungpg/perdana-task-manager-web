@@ -1,0 +1,23 @@
+# Node and build output
+node_modules
+.next
+out
+dist
+
+# Logs and debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+
+# Git and editor stuff
+.git
+.gitignore
+Dockerfile
+.dockerignore
+.vscode
+.idea
+
+# OS junk
+.DS_Store
+Thumbs.db
