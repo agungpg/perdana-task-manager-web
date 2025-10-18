@@ -1,0 +1,58 @@
+name: CI/CD Perdana Task Manager Web
+on: 
+  push:
+    branches:
+      - develop
+
+permissions:
+  contents: read
+  
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set up .env file
+        run: |
+          echo "API_URL=${{ secrets.API_URL }}" >> .env
+          echo "API_KEY=${{ secrets.API_KEY }}" >> .env
+
+
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+
+
+      - name: Build docker image
+        run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/perdana-task-manager-web .
+      
+      - name: Push docker image to Docker Hub
+        run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/perdana-task-manager-web:latest
+      
+      - name: Save SSH private key
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
+
+      - name: Deploy to server via SSH
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SERVER_SSH_PORT }}
+          script: |
+            docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+            docker stop perdana-task-manager-web || true
+            docker rm perdana-task-manager-web || true
+            docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/perdana-task-manager-web:latest
+            docker run -d --name perdana-task-manager-web -p 3000:3000 ${{ secrets.DOCKER_HUB_USERNAME }}/perdana-task-manager-web:latest
+
+            exit 0
+            
+      - name: Clean up SSH private key
+        run: rm -f private_key.pem
+
+      
