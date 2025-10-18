@@ -9,7 +9,7 @@ interface ApiFetchParams {
 }
 
 const apiFetch = async <T, K>(url: string, params: ApiFetchParams= {}): Promise<T> => {
-
+  
   try {
     const response = await fetch(`${apiUrl}${url}`, params as RequestInit);
     if (!response.ok) {
@@ -46,7 +46,7 @@ const composeFetchParams = <K>(params: {
     headers: defaultHeaders
   }
 
-  if(result.body) {
+  if(body) {
     result.body =  body instanceof FormData || body == null ? body as unknown as BodyInit : JSON.stringify(body) as BodyInit;
   }
 
