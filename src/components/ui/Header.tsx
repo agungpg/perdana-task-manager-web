@@ -1,5 +1,9 @@
+"use client";
 import { Logo } from "../icons/Logo";
 import { cn } from "@/utils/cn";
+import ProjectIcon from "../icons/ProjectIcon";
+import { useCallback } from "react";
+import { useRouter } from "next/navigation";
 const Header = ({
   Icon,
   title,
@@ -9,6 +13,7 @@ const Header = ({
   leftButton,
   rightButton,
   isFixed = false,
+  withProjectIcon = true,
 }: {
   Icon?: React.ReactNode;
   title?: string;
@@ -18,7 +23,12 @@ const Header = ({
   leftButton?: React.ReactNode;
   rightButton?: React.ReactNode;
   isFixed?: boolean;
+  withProjectIcon?: boolean;
 }) => {
+  const router = useRouter()
+  const handleProjectIconClick = useCallback(() => {
+    router.push('/projects');
+  }, [router]);
 
   return (
     <div className={cn(
@@ -27,12 +37,15 @@ const Header = ({
       className
     )}>
       {leftButton ? leftButton : null}
-      {withLogo ? <Logo width={69} height={45} /> : Icon ? Icon : null}
+      {withLogo ? <Logo width={80} height={50} /> : Icon ? Icon : null}
       <p className={cn(
-        'text-[32px] font-bold text-[#17A2B8]',
+        'text-[32px] font-bold text-[#17A2B8] !w-[70vw]',
         titleClassName
       )}>{title}</p>
       {rightButton ? rightButton : null}
+      {withProjectIcon ? <div className="flex justify-end">
+        <ProjectIcon onClick={handleProjectIconClick} className="cursor-pointer" color="#17A2BB"/> 
+        </div>: null}
     </div>
   )
 }

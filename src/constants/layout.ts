@@ -1,23 +1,23 @@
 const PathToTitle = {
   "/dashboard": "Dashboard",
-  "/checklist": "Task List",
+  "/task": "Task List",
   "/add": "Add",
-  "/chart": "Task Progress Report",
+  "/notifications": "Notifications",
   "/profile": "Profile",
 }
 
 const pathWithHome = [
   "/dashboard",
-  "/checklist",
+  "/task",
   "/add",
-  "/chart",
+  "/notifications",
   "/profile",
 ];
 const pathWithNavbar = [
   "/dashboard",
-  "/checklist",
+  "/task",
   "/add",
-  "/chart",
+  "/notifications",
   "/profile",
 ];
 

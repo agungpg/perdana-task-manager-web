@@ -8,7 +8,7 @@ interface ApiFetchParams {
   headers?: HeadersInit;
 }
 
-const apiFetch = async <T, K>(url: string, params: ApiFetchParams= {}): Promise<T> => {
+const apiFetch = async <T>(url: string, params: ApiFetchParams= {}): Promise<T> => {
   
   try {
     const response = await fetch(`${apiUrl}${url}`, params as RequestInit);

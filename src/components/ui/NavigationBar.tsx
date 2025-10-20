@@ -1,10 +1,10 @@
 "use client";
 import HomeIcon from "../icons/HomeIcon";
-import ChartIcon from "../icons/ChartIcon";
 import ChecklistIcon from "../icons/ChecklistIcon";
 import ProfileIcon from "../icons/ProfileIcon";
 import AddIcon from "../icons/AddIcon";
 import { useRouter } from "next/navigation";
+import NotificationIcon from "../icons/NotificationIcon";
 
 
 const NavigationBar = () => {
@@ -17,7 +17,7 @@ const NavigationBar = () => {
         <HomeIcon className="cursor-pointer" onClick={() => handleNavigate("/dashboard")} />
         <ChecklistIcon className="cursor-pointer" onClick={() => handleNavigate("/task")} />
         <AddIcon className="cursor-pointer" onClick={() => handleNavigate("/add")} />
-        <ChartIcon className="cursor-pointer" onClick={() => handleNavigate("/task-report")} />
+        <NotificationIcon height={34} width={34} color="#fff" className="cursor-pointer" onClick={() => handleNavigate("/notifications")} />
         <ProfileIcon className="cursor-pointer" onClick={() => handleNavigate("/profile")} />
     </div>
   )

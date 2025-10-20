@@ -22,7 +22,7 @@ const Dashboard = () => {
         done: 2,
         totalTime: 100,
       }} />
-      <TaskList />
+      <TaskList list={[]}/>
     </div>
   )
 }
