@@ -56,18 +56,18 @@ const composeFetchParams = <K>(params: {
 const api = {
   get: <T, K>(url: string, params: {
     headers?: HeadersInit;
-  }) => apiFetch<T, K>(url, composeFetchParams({ method: 'GET', ...params } as ApiFetchParams)),
+  }) => apiFetch<T>(url, composeFetchParams({ method: 'GET', ...params } as ApiFetchParams)),
   post: <T, K>(url: string, params: {
     body?: K;
     headers?: HeadersInit;
-  }) => apiFetch<T, K>(url, composeFetchParams({ method: 'POST', ...params } as ApiFetchParams)),
+  }) => apiFetch<T>(url, composeFetchParams({ method: 'POST', ...params } as ApiFetchParams)),
   put: <T, K>(url: string, params: {
     body?: K;
     headers?: HeadersInit;
-  }) => apiFetch<T, K>(url, composeFetchParams({ method: 'PUT', ...params } as ApiFetchParams)),
+  }) => apiFetch<T>(url, composeFetchParams({ method: 'PUT', ...params } as ApiFetchParams)),
   delete: <T, K>(url: string, params: {
     headers?: HeadersInit;
-  }) => apiFetch<T, K>(url, composeFetchParams({ method: 'DELETE', ...params } as ApiFetchParams)),
+  }) => apiFetch<T>(url, composeFetchParams({ method: 'DELETE', ...params } as ApiFetchParams)),
 };
 
 export default api;

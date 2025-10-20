@@ -9,11 +9,7 @@ export const metadata = {
   description: "Perdana Task Manager",
   manifest: "/manifest.json",
   themeColor: "#000000",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-  },
+  viewport: "standalone",
   icons: {
     icon: "/icons/ptm_logo_192.png",
     apple: "/icons/ptm_logo_512.png",
