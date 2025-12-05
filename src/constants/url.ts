@@ -21,4 +21,10 @@ const pathWithNavbar = [
   "/profile",
 ];
 
-export { PathToTitle, pathWithHome, pathWithNavbar };
+const pathWithoutToken = [
+  "/login",
+  "/register",
+  "/forgot-password",
+]
+
+export { PathToTitle, pathWithHome, pathWithNavbar, pathWithoutToken };

@@ -3,9 +3,11 @@
 import { usePathname } from "next/navigation";
 import Header from "@/components/ui/Header";
 import NavigationBar from "@/components/ui/NavigationBar";
-import {PathToTitle, pathWithHome, pathWithNavbar} from "@/constants/layout";
+import {PathToTitle, pathWithHome, pathWithNavbar} from "@/constants/url";
+import useCheckLogIn from "@/hooks/useCheckLogIn";
 
 export default function LayoutWrapper({ children }: { children: React.ReactNode }) {
+  useCheckLogIn()
   const pathname = usePathname();
   const title = PathToTitle[pathname as keyof typeof PathToTitle] || "Perdana Task Manager";
 
