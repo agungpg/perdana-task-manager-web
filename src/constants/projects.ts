@@ -35,4 +35,4 @@ export const projectSummaries: ProjectSummary[] = [
 ];
 
 export const getProjectSummaryById = (id: string) =>
-  projectSummaries.find((project) => project.id === id);
+  projectSummaries.find((project) => project.id === id) ?? projectSummaries[0];
