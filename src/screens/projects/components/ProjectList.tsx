@@ -1,18 +1,16 @@
 import { projectSummaries } from "@/constants/projects";
 import ProjectCard from "./ProjectCard";
+import { ProjectSummaries } from "../types";
 
-const PorjectList = () => {
+const PorjectList = ({data}: {data: ProjectSummaries[]}) => {
     return (
     <div className="flex flex-col gap-4 px-5">
-        {projectSummaries.map((project) => (
+        {data.map((project) => (
         <ProjectCard
-            key={project.id}
-            id={project.id}
-            name={project.name}
-            totalTasks={project.totalTasks}
-            tasksDone={project.tasksDone}
-            tasksInProgress={project.tasksInProgress}
-            tasksToDo={project.tasksToDo}
+            key={project.project_id}
+            id={project.project_id}
+            name={project.project_name}
+            statuses={project.statuses}
         />
         ))}
     </div>

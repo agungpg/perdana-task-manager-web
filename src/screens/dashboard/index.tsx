@@ -3,14 +3,15 @@ import { useState } from "react";
 import Summary from "./components/Summary";
 import CalendarPicker from "./components/CalendarPicker";
 import TaskList from "@/components/ui/TaskList";
+import useBootstrap from "@/hooks/useBootstrap";
 
 type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 const Dashboard = () => {
+  useBootstrap()
   const [value, onChange] = useState<Value>(new Date());
-  console.log(value);
 
   return (
     <div className="px-[20px] gap-[20px] flex flex-col py-10">

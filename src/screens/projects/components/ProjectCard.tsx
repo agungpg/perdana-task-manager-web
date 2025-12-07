@@ -7,19 +7,20 @@ import Card from "@/components/ui/Card";
 type ProjectCardProps = {
     id: string;
     name: string;
-    totalTasks: number;
-    tasksDone: number;
-    tasksInProgress: number;
-    tasksToDo: number;
+    statuses: Record<string, number>
 }
+
+const DetailItem = ({label, value}: {label: string; value: string}) => (
+  <div>
+    <p className="font-semibold">{label}</p>
+    <p className="text-base">{value}</p>
+  </div>
+)
 
 const ProjectCard = ({
     id,
     name,
-    totalTasks,
-    tasksDone,
-    tasksInProgress,
-    tasksToDo,
+    statuses
 }: ProjectCardProps) => {
     const router = useRouter();
 
@@ -31,22 +32,12 @@ const ProjectCard = ({
     <Card className="flex-col items-start gap-3 cursor-pointer" onClick={handleNavigateToTasks}>
         <h3 className="text-lg font-semibold text-gray-900">{name}</h3>
         <div className="grid w-full grid-cols-2 gap-2 text-sm text-gray-700">
-        <div>
-            <p className="font-medium">Total Tasks</p>
-            <p className="text-base">{totalTasks}</p>
-        </div>
-        <div>
-            <p className="font-medium">Done</p>
-            <p className="text-base">{tasksDone}</p>
-        </div>
-        <div>
-            <p className="font-medium">In Progress</p>
-            <p className="text-base">{tasksInProgress}</p>
-        </div>
-        <div>
-            <p className="font-medium">To Do</p>
-            <p className="text-base">{tasksToDo}</p>
-        </div>
+          {Object.keys(statuses).map(s => (
+            <DetailItem
+              label={s}
+              value={String(statuses[s])}
+            />
+          ))}
         </div>
     </Card>
     )

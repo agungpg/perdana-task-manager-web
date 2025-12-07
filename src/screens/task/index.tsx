@@ -8,13 +8,18 @@ import Tab from "@/components/ui/Tab";
 import TaskList from "@/components/ui/TaskList";
 import { getProjectSummaryById } from "@/constants/projects";
 import ProjectCard from "../projects/components/ProjectCard";
+import useUserSettings from "@/hooks/useUserSettings";
 
 const Task = () => {
   const [activeTab, setActiveTab] = React.useState<number>(0);
   const router = useRouter();
   const searchParams = useSearchParams();
   const projectId = searchParams.get("projectId");
-  const project = getProjectSummaryById(projectId ?? "")
+  
+  const {data: userSetting, isLoading: isUserSettingLoading} = useUserSettings()
+  
+  const project = getProjectSummaryById(userSetting?.active_project_id ?? "")
+  
   const { data, isLoading, isError } = useProjectTasks(project?.id);
 
   const handleTabChange = useCallback((tabId: number) => {
