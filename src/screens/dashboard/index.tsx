@@ -1,9 +1,11 @@
 'use client';
 import { useState } from "react";
 import Summary from "./components/Summary";
-import CalendarPicker from "./components/CalendarPicker";
 import TaskList from "@/components/ui/TaskList";
 import useBootstrap from "@/hooks/useBootstrap";
+import SearchInput from "../../components/ui/SearchInput";
+import TodayTasks from "./components/TodayTasks";
+import Activity from "./components/Activity";
 
 type ValuePiece = Date | null;
 
@@ -14,8 +16,8 @@ const Dashboard = () => {
   const [value, onChange] = useState<Value>(new Date());
 
   return (
-    <div className="px-[20px] gap-[20px] flex flex-col py-10">
-      <CalendarPicker value={value as Date} onChange={onChange} />
+    <div className="px-[20px] gap-6 flex flex-col py-10">
+      <SearchInput placeholder="Search tasks or projects..." />
       <Summary data={{
         totalTasks: 10,
         todo: 5,
@@ -23,7 +25,8 @@ const Dashboard = () => {
         done: 2,
         totalTime: 100,
       }} />
-      <TaskList list={[]}/>
+      <TodayTasks  />
+      <Activity />
     </div>
   )
 }

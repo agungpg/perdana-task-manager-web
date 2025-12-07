@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import useProjectTasks from "./useProjectTasks";
 import React from "react";
@@ -9,18 +9,22 @@ import TaskList from "@/components/ui/TaskList";
 import { getProjectSummaryById } from "@/constants/projects";
 import ProjectCard from "../projects/components/ProjectCard";
 import useUserSettings from "@/hooks/useUserSettings";
+import useProjectSummaries from "../projects/hooks/useProjectSummaries";
 
 const Task = () => {
   const [activeTab, setActiveTab] = React.useState<number>(0);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const projectId = searchParams.get("projectId");
   
   const {data: userSetting, isLoading: isUserSettingLoading} = useUserSettings()
+  const projectId = searchParams.get("projectId") ?? userSetting?.active_project_id;
+  const {data: projectSummaries} = useProjectSummaries()
+
+  const project = useMemo(() => {
+    return projectSummaries?.find(ps => ps.project_id == userSetting?.active_project_id)
+  }, [projectSummaries, userSetting?.active_project_id])
   
-  const project = getProjectSummaryById(userSetting?.active_project_id ?? "")
-  
-  const { data, isLoading, isError } = useProjectTasks(project?.id);
+  const { data, isLoading, isError } = useProjectTasks(project?.project_id ?? "");
 
   const handleTabChange = useCallback((tabId: number) => {
     router.replace(`/task?projectId=${projectId}&status=${tabId}`);
@@ -31,7 +35,7 @@ const Task = () => {
     <>
       <div className="py-6 flex flex-col gap-4">
         <div className="pt-2 px-5">
-          {project && <ProjectCard {...project} />}
+          {project && <ProjectCard id={project.project_id} name={project.project_name} statuses={project.statuses}  />}
         </div>
         <Tab 
           className="sticky top-[69px] z-40 bg-white w-[100%] px-5 pt-4 py-1"

@@ -4,7 +4,7 @@ const TaskList = ({
   list
 }: {list: ITaskItem[]}) => {
   return (
-    <div className="flex flex-col gap-[12px]">
+    <div className="flex flex-col gap-[12px] w-full">
       {list.map((item) => (
         <TaskCard data={item} key={item.title} />
       ))}
