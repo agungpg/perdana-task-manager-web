@@ -6,7 +6,6 @@ import useProjectTasks from "./useProjectTasks";
 import React from "react";
 import Tab from "@/components/ui/Tab";
 import TaskList from "@/components/ui/TaskList";
-import { getProjectSummaryById } from "@/constants/projects";
 import ProjectCard from "../projects/components/ProjectCard";
 import useUserSettings from "@/hooks/useUserSettings";
 import useProjectSummaries from "../projects/hooks/useProjectSummaries";
@@ -16,7 +15,7 @@ const Task = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   
-  const {data: userSetting, isLoading: isUserSettingLoading} = useUserSettings()
+  const {data: userSetting} = useUserSettings()
   const projectId = searchParams.get("projectId") ?? userSetting?.active_project_id;
   const {data: projectSummaries} = useProjectSummaries()
 

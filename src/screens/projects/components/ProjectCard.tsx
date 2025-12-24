@@ -34,6 +34,7 @@ const ProjectCard = ({
         <div className="grid w-full grid-cols-2 gap-2 text-sm text-gray-700">
           {Object.keys(statuses).map(s => (
             <DetailItem
+              key={s}
               label={s}
               value={String(statuses[s])}
             />

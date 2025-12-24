@@ -1,4 +1,3 @@
-import { projectSummaries } from "@/constants/projects";
 import ProjectCard from "./ProjectCard";
 import { ProjectSummaries } from "../types";
 

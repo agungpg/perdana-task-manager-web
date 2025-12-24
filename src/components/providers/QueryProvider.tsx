@@ -1,12 +1,16 @@
 "use client";
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
-import { QueryClient } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 
-const persister = createAsyncStoragePersister({
-  storage: window.localStorage,
-})
+const createPersister = () => {
+  if (typeof window === "undefined") return null;
+
+  return createAsyncStoragePersister({
+    storage: window.localStorage,
+  });
+};
 
 export function QueryProvider({ children }: { children: ReactNode }) {
   const [queryClient] = useState(() => new QueryClient({
@@ -16,6 +20,19 @@ export function QueryProvider({ children }: { children: ReactNode }) {
       },
     },
   }));
+  const [persister, setPersister] = useState(createPersister);
+
+  useEffect(() => {
+    setPersister(createPersister());
+  }, []);
+
+  if (!persister) {
+    return (
+      <QueryClientProvider client={queryClient}>
+        {children}
+      </QueryClientProvider>
+    );
+  }
 
   return (
     <PersistQueryClientProvider 

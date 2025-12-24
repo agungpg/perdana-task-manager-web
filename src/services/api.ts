@@ -54,7 +54,7 @@ const composeFetchParams = <K>(params: {
 }
 
 const api = {
-  get: <T, K>(url: string, params?: {
+  get: <T>(url: string, params?: {
     headers?: HeadersInit;
   }) => apiFetch<T>(url, composeFetchParams({ method: 'GET', ...params } as ApiFetchParams)),
   post: <T, K>(url: string, params: {
@@ -65,7 +65,7 @@ const api = {
     body?: K;
     headers?: HeadersInit;
   }) => apiFetch<T>(url, composeFetchParams({ method: 'PUT', ...params } as ApiFetchParams)),
-  delete: <T, K>(url: string, params: {
+  delete: <T>(url: string, params: {
     headers?: HeadersInit;
   }) => apiFetch<T>(url, composeFetchParams({ method: 'DELETE', ...params } as ApiFetchParams)),
 };

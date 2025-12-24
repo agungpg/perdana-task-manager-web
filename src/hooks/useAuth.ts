@@ -4,7 +4,7 @@ const useAuth = () => {
 
   const login = (username: string, password: string) => {
     // Implement login logic here
-    console.log(`Logging in user: ${username}`);
+    console.log(`Logging in user: ${username} ${password}`);
   };
 
   const logout = () => {

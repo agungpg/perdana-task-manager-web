@@ -1,7 +1,7 @@
 'use client';
-import { useState } from "react";
+// import { useState } from "react";
 import Summary from "./components/Summary";
-import TaskList from "@/components/ui/TaskList";
+// import TaskList from "@/components/ui/TaskList";
 import useBootstrap from "@/hooks/useBootstrap";
 import SearchInput from "../../components/ui/SearchInput";
 import TodayTasks from "./components/TodayTasks";
@@ -9,11 +9,11 @@ import Activity from "./components/Activity";
 
 type ValuePiece = Date | null;
 
-type Value = ValuePiece | [ValuePiece, ValuePiece];
+// type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 const Dashboard = () => {
   useBootstrap()
-  const [value, onChange] = useState<Value>(new Date());
+  // const [value, onChange] = useState<Value>(new Date());
 
   return (
     <div className="px-[20px] gap-6 flex flex-col py-10">

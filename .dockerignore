@@ -1,23 +1,26 @@
-# Node and build output
-node_modules
-.next
-out
-dist
+# Build Stage
+FROM node:20-alpine AS builder
+WORKDIR /app
 
-# Logs and debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+COPY package*.json ./
+RUN npm ci
 
+COPY . .
+ENV NEXT_TELEMETRY_DISABLED=1
+RUN npm run build
 
-# Git and editor stuff
-.git
-.gitignore
-Dockerfile
-.dockerignore
-.vscode
-.idea
+# Run Stage
+FROM node:20-alpine AS runner
+WORKDIR /app
 
-# OS junk
-.DS_Store
-Thumbs.db
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+# optional: limit memory (sesuaikan)
+ENV NODE_OPTIONS=--max-old-space-size=1024
+
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next/static ./.next/static
+
+EXPOSE 3000
+CMD ["node", "server.js"]
